@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-all main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "node-pandoc": "npm:node-pandoc@^0.3.0"
+  }
+}

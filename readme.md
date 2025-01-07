@@ -1,0 +1,1 @@
+- Precisa instalar o [pandoc](https://pandoc.org/)
