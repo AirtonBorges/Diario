@@ -2,13 +2,12 @@
 const metadata = `---
 title: Diário
 author: "Airton Borges"
+missing-images: |
+  ![shrek](./paginas/shrek.jpg)
 ---`;
 
-const caminhoPaginas = './paginas/';
-const caminhoDiario = './paginas/diario.md';
-
+const caminhoPaginas = './paginas';
 const nomes = [];
-const outrosArquivos = [];
 
 // Read all files from the folder
 for await (const item of Deno.readDir(caminhoPaginas)) {
@@ -22,20 +21,17 @@ for await (const item of Deno.readDir(caminhoPaginas)) {
 
   if (nomeArquivo.endsWith('.md'))
     nomes.push(nomeArquivo.replace('.md', ''));
-  else
-    outrosArquivos.push(caminhoPaginas + nomeArquivo);
 }
 
-Deno.writeTextFileSync(caminhoDiario, metadata);
+Deno.writeTextFileSync('./paginas/diario.md', metadata);
 
-nomes.forEach((p) => {
-  const filePath = `${caminhoPaginas}/${p}.md`;
+nomes.forEach((fileName) => {
+  const filePath = `${caminhoPaginas}/${fileName}.md`;
   const fileContent = Deno.readTextFileSync(filePath);
-  const text = `\n\n## ${p}\n\n${fileContent}`;
-  Deno.writeTextFileSync(caminhoDiario, text, { append: true });
+  const text = `\n\n## ${fileName}\n\n${fileContent}`;
+  Deno.writeTextFileSync('./paginas/diario.md', text, { append: true });
   console.log(text);
 });
-console.log(outrosArquivos);
 
 const command = new Deno.Command('pandoc', {
   cwd: Deno.cwd(),
@@ -43,15 +39,16 @@ const command = new Deno.Command('pandoc', {
     '-f', 'markdown',
     '-t', 'epub3',
     '-o', 'diario.epub',
-    caminhoDiario,
-    './paginas/shrek.jpg'
+    './paginas/diario.md',
   ],
 });
 
 const { code, stdout, stderr } = await command.output();
 
 if (code === 0) {
+  console.log("Pandoc command executed successfully!");
   console.log(new TextDecoder().decode(stdout));
 } else {
+  console.error("Error executing Pandoc command.");
   console.error(new TextDecoder().decode(stderr));
 }

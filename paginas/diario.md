@@ -1,6 +1,8 @@
 ---
 title: Diário
 author: "Airton Borges"
+missing-images: |
+  ![shrek](./paginas/shrek.jpg)
 ---
 
 ## Diário 2025-01-06
