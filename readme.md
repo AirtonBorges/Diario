@@ -1,4 +1,6 @@
 - Precisa instalar o [pandoc](https://pandoc.org/)
 
 ### Todo
-- usar o defaults.yaml
+- [ ] deixar mais genérico
+- [ ] usar envs pra colocar o metadata e o caminho dos recursos
+- [ ] talvez fazer em c#
